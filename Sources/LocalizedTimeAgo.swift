@@ -66,7 +66,7 @@ public extension Date {
         return calendar.dateComponents(unitFlags, from: self, to: now)
     }
 
-    public func timeAgo(numericDates: Bool = false, numericTimes: Bool = false) -> String {
+  public func timeAgo(numericDates: Bool = false, showSeconds: Bool = true) -> String {
         if let year = components.year, year > 0 {
             if year >= 2 { return String(format: "%d years ago".adjustedKey(forValue: year).localized(), year) }
             return numericDates ? "1 year ago".localized() : "Last year".localized()
@@ -86,10 +86,10 @@ public extension Date {
         } else if let minute = components.minute, minute > 0 {
             if minute >= 2 { return String(format: "%d minutes ago".adjustedKey(forValue: minute).localized(), minute) }
             return numericDates ? "1 minute ago".localized() : "A minute ago".localized()
-        } else if let second = components.second, second >= 3 {
+        } else if let second = components.second, showSeconds == true {
             return String(format: "%d seconds ago".adjustedKey(forValue: second).localized(), second)
         }
-        return numericTimes ? "1 second ago".localized() : "Just now".localized()
+        return showSeconds ? "1 second ago".localized() : "Just now".localized()
     }
 
     public func shortTimeAgo() -> String {
